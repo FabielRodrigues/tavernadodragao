@@ -10,6 +10,7 @@ import DicePage from "@/pages/DicePage";
 import Settings from "@/pages/Settings";
 import NotFound from "@/pages/NotFound";
 import CharacterSheet from "@/pages/CharacterSheet";
+import GameRoom from "@/pages/GameRoom";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/dice" element={<DicePage />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/characters/:id" element={<CharacterSheet />} />
+          <Route path="/gameroom/:id" element={<GameRoom />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
