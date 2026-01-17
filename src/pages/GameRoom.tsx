@@ -5,7 +5,6 @@ import { CharacterSidebar } from "@/components/gameroom/CharacterSidebar";
 import { GameRoomChat } from "@/components/gameroom/GameRoomChat";
 import { EventLog } from "@/components/gameroom/EventLog";
 import { Badge } from "@/components/ui/badge";
-import { Users } from "lucide-react";
 
 const MOCK_CAMPAIGN = {
     id: "1",
@@ -120,7 +119,10 @@ export default function GameRoom() {
                     >
                         {/* Ambient Background Effect */}
                         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
-                        <GameRoomChat campaignTitle={MOCK_CAMPAIGN.title} />
+                        <GameRoomChat
+                            campaignTitle={MOCK_CAMPAIGN.title}
+                            players={MOCK_PLAYERS}
+                        />
                     </motion.div>
 
                     {/* Right Sidebar - Event Log */}
