@@ -74,7 +74,7 @@ export default function Campaigns() {
                         <h1 className="font-display text-4xl text-foreground mb-2">
                             Campanhas
                         </h1>
-                        <p className="text-muted-foreground font-lora">
+                        <p className="text-muted-foreground">
                             Explore campanhas em andamento ou crie a sua própria aventura.
                         </p>
                     </div>
@@ -99,19 +99,18 @@ export default function Campaigns() {
                             placeholder="Buscar campanhas..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full h-11 pl-10 pr-4 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:box-glow"
+                            className="w-full h-11 pl-10 pr-4 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                     </div>
 
                     {/* Status Filter */}
-                    <div className="flex gap-2 flex-wrap">
+                    <div className="flex gap-2">
                         {["all", "active", "recruiting", "paused"].map((status) => (
                             <Button
                                 key={status}
                                 variant={statusFilter === status ? "default" : "outline"}
                                 size="sm"
                                 onClick={() => setStatusFilter(status)}
-                                className="font-display"
                             >
                                 {status === "all" && "Todas"}
                                 {status === "active" && "Ativas"}
@@ -152,7 +151,7 @@ export default function Campaigns() {
                         <h3 className="font-display text-xl text-foreground mb-2">
                             Nenhuma campanha encontrada
                         </h3>
-                        <p className="text-muted-foreground font-lora">
+                        <p className="text-muted-foreground">
                             Tente ajustar os filtros ou criar uma nova campanha.
                         </p>
                     </motion.div>

@@ -1,7 +1,8 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Clock, Shield } from "lucide-react";
+import { Users, Clock, Shield, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface CampaignCardProps {
     id: string;
@@ -33,6 +34,7 @@ const statusConfig = {
 };
 
 export function CampaignCard({
+    id,
     title,
     description,
     master,
@@ -44,43 +46,46 @@ export function CampaignCard({
     const config = statusConfig[status];
 
     return (
-        <Card className="group h-full bg-card border-medieval hover:box-glow transition-all duration-300 flex flex-col">
-            <CardHeader className="pb-3">
-                <div className="flex justify-between items-start gap-4 mb-2">
-                    <Badge
-                        variant={config.variant}
-                        className={cn("font-display", config.className)}
-                    >
-                        {config.label}
-                    </Badge>
-                    <div className="flex items-center text-xs text-muted-foreground font-lora">
-                        <Clock className="w-3 h-3 mr-1" />
-                        {lastActivity}
+        <Link to={`/gameroom/${id}`} className="block h-full no-underline">
+            <Card className="group h-full bg-card border-medieval hover:box-glow transition-all duration-300 flex flex-col cursor-pointer">
+                <CardHeader className="pb-3">
+                    <div className="flex justify-between items-start gap-4 mb-2">
+                        <Badge
+                            variant={config.variant}
+                            className={cn("font-display", config.className)}
+                        >
+                            {config.label}
+                        </Badge>
+                        <div className="flex items-center text-xs text-muted-foreground font-lora">
+                            <Clock className="w-3 h-3 mr-1" />
+                            {lastActivity}
+                        </div>
                     </div>
-                </div>
-                <CardTitle className="font-display text-xl text-primary group-hover:text-glow transition-all">
-                    {title}
-                </CardTitle>
-            </CardHeader>
+                    <CardTitle className="font-display text-xl text-primary group-hover:text-glow transition-all flex items-center justify-between">
+                        {title}
+                        <ArrowRight className="h-5 w-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                    </CardTitle>
+                </CardHeader>
 
-            <CardContent className="flex-1 pb-6 text-sm text-muted-foreground font-lora line-clamp-3">
-                {description}
-            </CardContent>
+                <CardContent className="flex-1 pb-6 text-sm text-muted-foreground font-lora line-clamp-3">
+                    {description}
+                </CardContent>
 
-            <CardFooter className="pt-0 flex flex-col gap-4">
-                <div className="h-px w-full bg-border/50" />
-                <div className="w-full flex justify-between items-center text-sm font-lora">
-                    <div className="flex items-center text-foreground/80">
-                        <Shield className="w-4 h-4 mr-2 text-primary" />
-                        <span className="text-xs mr-1 text-muted-foreground">Mestre:</span>
-                        {master}
+                <CardFooter className="pt-0 flex flex-col gap-4">
+                    <div className="h-px w-full bg-border/50" />
+                    <div className="w-full flex justify-between items-center text-sm font-lora">
+                        <div className="flex items-center text-foreground/80">
+                            <Shield className="w-4 h-4 mr-2 text-primary" />
+                            <span className="text-xs mr-1 text-muted-foreground">Mestre:</span>
+                            {master}
+                        </div>
+                        <div className="flex items-center text-foreground/80">
+                            <Users className="w-4 h-4 mr-2 text-primary" />
+                            {players}/{maxPlayers}
+                        </div>
                     </div>
-                    <div className="flex items-center text-foreground/80">
-                        <Users className="w-4 h-4 mr-2 text-primary" />
-                        {players}/{maxPlayers}
-                    </div>
-                </div>
-            </CardFooter>
-        </Card>
+                </CardFooter>
+            </Card>
+        </Link>
     );
 }
