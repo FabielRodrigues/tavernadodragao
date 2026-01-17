@@ -1,95 +1,149 @@
-import MainLayout from "@/components/layout/MainLayout";
+import { motion } from "framer-motion";
+import { Header } from "@/components/layout/Header";
+import { CharacterCard } from "@/components/character/CharacterCard";
 import { Button } from "@/components/ui/button";
-import { Plus, Scroll, Shield, Ghost } from "lucide-react";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Plus, Search, Upload } from "lucide-react";
+import { useState } from "react";
 
-// Mock Data
 const MOCK_CHARACTERS = [
     {
-        id: 1,
-        name: "Theren Moonwhisper",
-        race: "Elf",
-        class: "Wizard",
+        id: "1",
+        name: "Thorin Escudo de Carvalho",
+        race: "Anão",
+        className: "Guerreiro",
         level: 5,
+        hp: { current: 45, max: 52 },
+        ac: 18,
         campaign: "A Maldição de Strahd",
-        image: "https://images.unsplash.com/photo-1535581652167-3d6b98c36cd0?q=80&w=600&auto=format&fit=crop"
     },
     {
-        id: 2,
-        name: "Grommash Hellscream",
-        race: "Half-Orc",
-        class: "Barbarian",
+        id: "2",
+        name: "Eldara a Sábia",
+        race: "Elfa",
+        className: "Maga",
+        level: 5,
+        hp: { current: 28, max: 30 },
+        ac: 13,
+        campaign: "A Maldição de Strahd",
+    },
+    {
+        id: "3",
+        name: "Grimjaw o Impiedoso",
+        race: "Meio-Orc",
+        className: "Bárbaro",
         level: 3,
-        campaign: "A Mina Perdida de Phandelver",
-        image: "https://images.unsplash.com/photo-1579783483458-83d02161294e?q=80&w=600&auto=format&fit=crop"
+        hp: { current: 38, max: 38 },
+        ac: 14,
     },
     {
-        id: 3,
-        name: "Lyra Silvertongue",
-        race: "Human",
-        class: "Bard",
-        level: 7,
-        campaign: "None",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop"
-    }
+        id: "4",
+        name: "Lyra Canção Prateada",
+        race: "Meio-Elfa",
+        className: "Barda",
+        level: 4,
+        hp: { current: 26, max: 28 },
+        ac: 14,
+        campaign: "Waterdeep: O Roubo",
+    },
 ];
 
-const Characters = () => {
-    return (
-        <MainLayout>
-            <div className="p-4 md:p-8 space-y-8 animate-fade-in-up">
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <h1 className="text-4xl font-bold font-cinzel text-primary text-glow">Meus Personagens</h1>
-                        <p className="text-muted-foreground mt-2 font-lora">Gerencie suas fichas e heróis (D&D 5e).</p>
-                    </div>
-                    <Button className="bg-primary text-primary-foreground hover:bg-primary/90 font-cinzel shadow-lg hover:shadow-xl transition-all">
-                        <Plus className="mr-2 h-4 w-4" /> Criar Personagem (PDF)
-                    </Button>
-                </div>
+export default function Characters() {
+    const [searchQuery, setSearchQuery] = useState("");
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {MOCK_CHARACTERS.map((char) => (
-                        <Card key={char.id} className="bg-card border-border border-medieval overflow-hidden group hover:shadow-2xl transition-all duration-300">
-                            <CardHeader className="pb-2">
-                                <div className="flex justify-between items-start">
-                                    <div className="flex items-center gap-4">
-                                        <Avatar className="h-16 w-16 border-2 border-primary">
-                                            <AvatarImage src={char.image} alt={char.name} />
-                                            <AvatarFallback><Ghost className="h-6 w-6" /></AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <CardTitle className="font-cinzel text-xl text-primary">{char.name}</CardTitle>
-                                            <CardDescription className="font-lora text-base">{char.race} {char.class} • Lvl {char.level}</CardDescription>
-                                        </div>
-                                    </div>
-                                </div>
-                            </CardHeader>
-                            <CardContent className="pt-4">
-                                <div className="text-sm text-muted-foreground flex items-center gap-2 mb-2">
-                                    <Shield className="h-4 w-4 text-secondary-foreground" />
-                                    <span>Campanha: <span className="text-foreground">{char.campaign}</span></span>
-                                </div>
-                            </CardContent>
-                            <CardFooter className="bg-muted/20 p-4 flex gap-2">
-                                <Button variant="ghost" className="flex-1 text-primary hover:text-primary hover:bg-primary/10">
-                                    <Scroll className="mr-2 h-4 w-4" /> Ver Ficha
-                                </Button>
-                            </CardFooter>
-                        </Card>
-                    ))}
-                </div>
-            </div>
-        </MainLayout>
+    const filteredCharacters = MOCK_CHARACTERS.filter(char =>
+        char.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        char.race.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        char.className.toLowerCase().includes(searchQuery.toLowerCase())
     );
-};
 
-export default Characters;
+    return (
+        <div className="min-h-screen bg-background text-foreground">
+            <Header />
+
+            <main className="container mx-auto px-4 pt-24 pb-12">
+                {/* Page Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8"
+                >
+                    <div>
+                        <h1 className="font-display text-4xl text-primary mb-2 text-glow">
+                            Personagens
+                        </h1>
+                        <p className="text-muted-foreground font-lora">
+                            Gerencie suas fichas de personagem e importe PDFs de D&D 5e.
+                        </p>
+                    </div>
+                    <div className="flex gap-3">
+                        <Button variant="medieval">
+                            <Upload className="h-4 w-4 mr-2" />
+                            Importar PDF
+                        </Button>
+                        <Button variant="hero">
+                            <Plus className="h-5 w-5 mr-2" />
+                            Novo Personagem
+                        </Button>
+                    </div>
+                </motion.div>
+
+                {/* Search */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="mb-8"
+                >
+                    <div className="relative max-w-md">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                        <input
+                            type="text"
+                            placeholder="Buscar personagens..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full h-11 pl-10 pr-4 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:box-glow"
+                        />
+                    </div>
+                </motion.div>
+
+                {/* Characters Grid */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                >
+                    {filteredCharacters.map((character, index) => (
+                        <motion.div
+                            key={character.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 * index }}
+                        >
+                            <CharacterCard {...character} />
+                        </motion.div>
+                    ))}
+                </motion.div>
+
+                {/* Empty State */}
+                {filteredCharacters.length === 0 && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="text-center py-16"
+                    >
+                        <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+                            <Search className="h-12 w-12 text-muted-foreground/50" />
+                        </div>
+                        <h3 className="font-display text-xl text-foreground mb-2">
+                            Nenhum personagem encontrado
+                        </h3>
+                        <p className="text-muted-foreground font-lora">
+                            Tente uma busca diferente ou crie um novo personagem.
+                        </p>
+                    </motion.div>
+                )}
+            </main>
+        </div>
+    );
+}

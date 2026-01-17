@@ -9,6 +9,7 @@ import Chat from "@/pages/Chat";
 import DicePage from "@/pages/DicePage";
 import Settings from "@/pages/Settings";
 import NotFound from "@/pages/NotFound";
+import CharacterSheet from "@/pages/CharacterSheet";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/chat" element={<Chat />} />
           <Route path="/dice" element={<DicePage />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/characters/:id" element={<CharacterSheet />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
